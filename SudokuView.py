@@ -23,7 +23,7 @@ class SudokuView:
                     color = "white"
                 self.cells[(row_counter, column_counter)] = tk.Label(self.master, width=4, height=2, font=("Helvetica", 20), bg=color,
                                            relief="raised")
-                self.cells[(row_counter, column_counter)].grid(row=row_counter, column=column_counter) #TODO use actual array values
+                self.cells[(row_counter, column_counter)].grid(row=row_counter, column=column) #TODO use actual array values
                 column_counter += 1
             row_counter += 1
         self.master.mainloop()
