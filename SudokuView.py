@@ -36,15 +36,14 @@ class SudokuView:
 
     def generate_cell(self, game, row, column):
         color = determine_color(row, column)
-        self.cells[(row, column)] = tk.Text(self.rootView, width=4, height=2, font=("Helvetica", 20), bg=color,
-                                            relief='raised')
-
+        cell = tk.Text(self.rootView, width=4, height=2, font=("Helvetica", 20), bg=color, relief='raised', bd=2)
         if game[row][column] != 0:
-            self.cells[(row, column)].insert(END, game[row][column])
-            self.cells[(row, column)]['state'] = 'disabled'
+            cell.insert(END, game[row][column])
+            cell['state'] = 'disabled'
         else:
-            self.cells[(row, column)].insert(END, '')
-        self.cells[(row, column)].grid(row=row, column=column)
+            cell.insert(END, '')
+        cell.grid(row=row, column=column)
+        self.cells[(row, column)] = cell
 
     def create_buttons(self):
         reset_button = tk.Button(self.rootView, text="Reset", font=("Helvetica", 16), command=self.generate_board)
