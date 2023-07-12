@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter import END
+
 from SudokuController import SudokuController
 
 
@@ -34,12 +36,14 @@ class SudokuView:
 
     def generate_cell(self, game, row, column):
         color = determine_color(row, column)
-        self.cells[(row, column)] = tk.Label(self.rootView, width=4, height=2, font=("Helvetica", 20), bg=color,
-                                             relief="raised")
+        self.cells[(row, column)] = tk.Text(self.rootView, width=4, height=2, font=("Helvetica", 20), bg=color,
+                                            relief='raised')
+
         if game[row][column] != 0:
-            self.cells[(row, column)].config(text=game[row][column], fg="black")
+            self.cells[(row, column)].insert(END, game[row][column])
+            self.cells[(row, column)]['state'] = 'disabled'
         else:
-            self.cells[(row, column)].config(text="", fg="black")
+            self.cells[(row, column)].insert(END, '')
         self.cells[(row, column)].grid(row=row, column=column)
 
     def create_buttons(self):
