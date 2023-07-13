@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import END
-
-from SudokuController import SudokuController
+from Sudoku import generate_sudoku
 
 
 def determine_color(row, column):
@@ -17,7 +16,6 @@ class SudokuView:
 
     def __init__(self, initial_difficulty='easy'):
         self.difficulty = initial_difficulty
-        self.sudokuController = SudokuController()
         self.rootView = tk.Tk()
         self.cells = {}
         self.generate_board()
@@ -25,7 +23,7 @@ class SudokuView:
         self.rootView.mainloop()
 
     def generate_board(self):
-        game = self.sudokuController.generate_sudoku(self.difficulty)
+        game = generate_sudoku(self.difficulty)
         row = 0
         for rows in game:
             column = 0

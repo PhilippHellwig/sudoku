@@ -1,7 +1,30 @@
 import random
 
 
-def find_empty_cell(board):
+def generate_sudoku(difficulty):
+    board = [[0 for _ in range(9)] for _ in range(9)]
+    __solve_sudoku(board)
+    __remove_values(board, difficulty)
+    return board
+
+
+def __solve_sudoku(board):
+    empty_cell = __find_empty_cell(board)
+    if not empty_cell:
+        return True
+
+    row, col = empty_cell
+    for num in range(1, 10):
+        if __is_valid(board, row, col, num):
+            board[row][col] = num
+            if __solve_sudoku(board):
+                return True
+            board[row][col] = 0
+
+    return False
+
+
+def __find_empty_cell(board):
     for row in range(9):
         for column in range(9):
             if board[row][column] == 0:
@@ -9,7 +32,7 @@ def find_empty_cell(board):
     return None
 
 
-def is_valid(board, row, col, num):
+def __is_valid(board, row, col, num):
     # Check row
     for j in range(9):
         if board[row][j] == num:
@@ -31,7 +54,7 @@ def is_valid(board, row, col, num):
     return True
 
 
-def remove_values(board, difficulty):
+def __remove_values(board, difficulty):
     # Calculate the number of cells to remove based on difficulty
     if difficulty == 'easy':
         cells_to_remove = 40
@@ -49,26 +72,3 @@ def remove_values(board, difficulty):
         if board[row][col] != 0:
             board[row][col] = 0
             cells_to_remove -= 1
-
-
-class SudokuController:
-    def generate_sudoku(self, difficulty):
-        board = [[0 for _ in range(9)] for _ in range(9)]
-        self.solve_sudoku(board)
-        remove_values(board, difficulty)
-        return board
-
-    def solve_sudoku(self, board):
-        empty_cell = find_empty_cell(board)
-        if not empty_cell:
-            return True
-
-        row, col = empty_cell
-        for num in range(1, 10):
-            if is_valid(board, row, col, num):
-                board[row][col] = num
-                if self.solve_sudoku(board):
-                    return True
-                board[row][col] = 0
-
-        return False
