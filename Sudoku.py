@@ -14,7 +14,7 @@ def __solve_sudoku(board):
         return True
 
     row, col = empty_cell
-    for num in range(1, 10):
+    for num in random_numbers():
         if __is_valid(board, row, col, num):
             board[row][col] = num
             if __solve_sudoku(board):
@@ -72,3 +72,8 @@ def __remove_values(board, difficulty):
         if board[row][col] != 0:
             board[row][col] = 0
             cells_to_remove -= 1
+
+def random_numbers():
+    numbers = list(range(1, 10))
+    random.shuffle(numbers)
+    return numbers
