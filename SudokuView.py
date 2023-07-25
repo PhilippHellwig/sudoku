@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import END
 from Sudoku import generate_sudoku
-
+from Sudoku import solve_sudoku
 
 def determine_color(row, column):
     if (row in (0, 1, 2, 6, 7, 8) and column in (3, 4, 5)) or (
@@ -17,8 +17,9 @@ class SudokuView:
     def __init__(self, initial_difficulty='easy'):
         self.difficulty = initial_difficulty
         self.rootView = tk.Tk()
+        self.rootView.geometry("600x700")
         self.cells = {}
-        self.generate_board()
+        self.game = self.generate_board()
         self.create_buttons()
         self.rootView.mainloop()
 
@@ -31,6 +32,7 @@ class SudokuView:
                 self.generate_cell(game, row, column)
                 column += 1
             row += 1
+        return game
 
     def generate_cell(self, game, row, column):
         color = determine_color(row, column)
@@ -43,6 +45,11 @@ class SudokuView:
         cell.grid(row=row, column=column)
         self.cells[(row, column)] = cell
 
+    def solve(self):
+        solve_sudoku(self.game)
+
     def create_buttons(self):
         reset_button = tk.Button(self.rootView, text="Reset", font=("Helvetica", 16), command=self.generate_board)
-        reset_button.grid(row=10, column=5, columnspan=3, padx=5, pady=5)
+        reset_button.grid(row=10, column=3, columnspan=3, padx=5, pady=5)
+        solve_button = tk.Button(self.rootView, text="Solve", font=("Helvetica", 16), command=self.solve)
+        solve_button.grid(row=10, column=5, columnspan=3, padx=5, pady=5)

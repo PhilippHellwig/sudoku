@@ -3,12 +3,12 @@ import random
 
 def generate_sudoku(difficulty):
     board = [[0 for _ in range(9)] for _ in range(9)]
-    __solve_sudoku(board)
+    solve_sudoku(board)
     __remove_values(board, difficulty)
     return board
 
 
-def __solve_sudoku(board):
+def solve_sudoku(board):
     empty_cell = __find_empty_cell(board)
     if not empty_cell:
         return True
@@ -17,7 +17,7 @@ def __solve_sudoku(board):
     for num in random_numbers():
         if __is_valid(board, row, col, num):
             board[row][col] = num
-            if __solve_sudoku(board):
+            if solve_sudoku(board):
                 return True
             board[row][col] = 0
 
